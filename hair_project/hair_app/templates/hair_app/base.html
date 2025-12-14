@@ -111,7 +111,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-hands-helping"></i> Hair Donation Portal
+                <i class="fas fa-hands-helping"></i> Gift
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -122,16 +122,7 @@
                         <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'donor_registration' %}"><i class="fas fa-hand-holding-heart"></i> Donate Hair</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'request_hair' %}"><i class="fas fa-question-circle"></i> Request Hair</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'donor_list' %}"><i class="fas fa-users"></i> Donors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'request_list' %}"><i class="fas fa-list"></i> Requests</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About</a>
@@ -145,11 +136,15 @@
                                 <i class="fas fa-user-circle"></i> {{ user.username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'user_profile' %}"><i class="fas fa-user"></i> My Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'my_donations' %}"><i class="fas fa-heart"></i> My Donations</a></li>
-                                <li><a class="dropdown-item" href="{% url 'my_requests' %}"><i class="fas fa-list"></i> My Requests</a></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'user_profile' %}"><i class="fas fa-user"></i> My Profile</a></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'donor_registration' %}"><i class="fas fa-hand-holding-heart"></i> Donate Hair</a></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'request_hair' %}"><i class="fas fa-question-circle"></i> Request Hair</a></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'request_list' %}"><i class="fas fa-list"></i> View Requests</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'my_donations' %}"><i class="fas fa-heart"></i> My Donations</a></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'my_requests' %}"><i class="fas fa-list"></i> My Requests</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-dark" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                             </ul>
                         </li>
                     {% else %}
@@ -185,7 +180,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5><i class="fas fa-heart"></i> Hair Donation Portal</h5>
+                    <h5><i class="fas fa-heart"></i> Gift</h5>
                     <p>Connecting kind hearts with those in need. Together, we can make a difference.</p>
                 </div>
                 <div class="col-md-4">
@@ -206,7 +201,7 @@
                 </div>
             </div>
             <hr class="bg-white">
-            <p class="text-center mb-0">&copy; 2024 Hair Donation Portal. All rights reserved. Made with <i class="fas fa-heart"></i></p>
+            <p class="text-center mb-0">&copy; 2024 Gift. All rights reserved. Made with <i class="fas fa-heart"></i></p>
         </div>
     </footer>
 

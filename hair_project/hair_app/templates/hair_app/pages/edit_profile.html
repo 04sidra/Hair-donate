@@ -21,14 +21,14 @@
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">First Name</label>
+                                <label class="form-label fw-bold text-dark">First Name</label>
                                 {{ user_form.first_name }}
                                 {% if user_form.first_name.errors %}
                                     <div class="text-danger small">{{ user_form.first_name.errors }}</div>
                                 {% endif %}
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Last Name</label>
+                                <label class="form-label fw-bold text-dark">Last Name</label>
                                 {{ user_form.last_name }}
                                 {% if user_form.last_name.errors %}
                                     <div class="text-danger small">{{ user_form.last_name.errors }}</div>
@@ -37,7 +37,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Email Address</label>
+                            <label class="form-label fw-bold text-dark">Email Address</label>
                             {{ user_form.email }}
                             {% if user_form.email.errors %}
                                 <div class="text-danger small">{{ user_form.email.errors }}</div>
@@ -52,7 +52,7 @@
                         </h5>
                         
                         <div class="mb-3">
-                            <label class="form-label">Profile Picture</label>
+                            <label class="form-label fw-bold text-dark">Profile Picture</label>
                             {% if user.profile.profile_picture %}
                                 <div class="mb-2">
                                     <img src="{{ user.profile.profile_picture.url }}" 
@@ -67,17 +67,17 @@
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Phone Number</label>
+                                <label class="form-label fw-bold text-dark">Phone Number</label>
                                 {{ profile_form.phone }}
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Date of Birth</label>
+                                <label class="form-label fw-bold text-dark">Date of Birth</label>
                                 {{ profile_form.date_of_birth }}
                             </div>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Bio</label>
+                            <label class="form-label fw-bold text-dark">Bio</label>
                             {{ profile_form.bio }}
                             <small class="text-muted">Tell us a little about yourself</small>
                         </div>
@@ -90,21 +90,21 @@
                         </h5>
                         
                         <div class="mb-3">
-                            <label class="form-label">Address</label>
+                            <label class="form-label fw-bold text-dark">Address</label>
                             {{ profile_form.address }}
                         </div>
                         
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">City</label>
+                                <label class="form-label fw-bold text-dark">City</label>
                                 {{ profile_form.city }}
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">State</label>
+                                <label class="form-label fw-bold text-dark">State</label>
                                 {{ profile_form.state }}
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Pincode</label>
+                                <label class="form-label fw-bold text-dark">Pincode</label>
                                 {{ profile_form.pincode }}
                             </div>
                         </div>
