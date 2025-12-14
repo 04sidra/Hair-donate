@@ -1,0 +1,130 @@
+{% extends 'hair_app/base.html' %}
+
+{% block title %}Become a Donor - Hair Donation Portal{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <i class="fas fa-hand-holding-heart fa-4x" style="color: var(--primary-color);"></i>
+                <h2 class="mt-3 fw-bold" style="color: var(--secondary-color);">Become a Hair Donor</h2>
+                <p class="lead text-muted">Your hair can change someone's life. Fill out this form to register as a donor.</p>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <form method="POST" action="{% url 'donor_registration' %}">
+                        {% csrf_token %}
+                        
+                        <!-- Personal Information -->
+                        <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">
+                            <i class="fas fa-user"></i> Personal Information
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Full Name *</label>
+                                {{ form.full_name }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email Address *</label>
+                                {{ form.email }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Phone Number *</label>
+                                {{ form.phone }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Age *</label>
+                                {{ form.age }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Gender *</label>
+                                {{ form.gender }}
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Address Information -->
+                        <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">
+                            <i class="fas fa-map-marker-alt"></i> Address Details
+                        </h5>
+                        <div class="mb-3">
+                            <label class="form-label">Full Address *</label>
+                            {{ form.address }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">City *</label>
+                                {{ form.city }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">State *</label>
+                                {{ form.state }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Pincode *</label>
+                                {{ form.pincode }}
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Hair Information -->
+                        <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">
+                            <i class="fas fa-cut"></i> Hair Details
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Hair Length (inches) *</label>
+                                {{ form.hair_length }}
+                                <small class="text-muted">Minimum 8-10 inches required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Hair Type *</label>
+                                {{ form.hair_type }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Hair Color *</label>
+                                {{ form.hair_color }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Hair Condition *</label>
+                            {{ form.hair_condition }}
+                            <small class="text-muted">Please mention if chemically treated, dyed, etc.</small>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            {{ form.willing_to_donate }}
+                            <label class="form-check-label" for="{{ form.willing_to_donate.id_for_label }}">
+                                I am willing to donate my hair to help someone in need
+                            </label>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> 
+                            <strong>Note:</strong> Please ensure your hair is clean, dry, and free from any chemicals for at least 2 weeks before donation.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-heart"></i> Register as Donor
+                            </button>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Home
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
