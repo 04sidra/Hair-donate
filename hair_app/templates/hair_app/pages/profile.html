@@ -1,0 +1,377 @@
+{% extends 'hair_app/base.html' %}
+
+{% block title %}My Profile - Hair Donation Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Fix for light text - make all text dark and readable */
+    .card-body {
+        color: #333 !important;
+    }
+    .card-body p, .card-body h6, .card-body small, .card-body div {
+        color: #333 !important;
+    }
+    .text-muted {
+        color: #6c757d !important;
+    }
+    .tab-content {
+        color: #333 !important;
+    }
+    
+    /* Tab styling - make tabs visible with dark text */
+    .nav-tabs .nav-link {
+        color: #333 !important;
+        font-weight: bold !important;
+        background-color: #f8f9fa;
+        border: 2px solid #dee2e6;
+        margin-right: 5px;
+    }
+    
+    .nav-tabs .nav-link:hover {
+        background-color: #e91e63;
+        color: white !important;
+        border-color: #e91e63;
+    }
+    
+    .nav-tabs .nav-link.active {
+        background: linear-gradient(135deg, #e91e63, #9c27b0);
+        color: white !important;
+        border-color: #e91e63;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Profile Header -->
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                <div class="card-body text-white p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center">
+                            <div class="rounded-circle bg-white d-flex align-items-center justify-content-center mx-auto" 
+                                 style="width: 120px; height: 120px;">
+                                <i class="fas fa-user fa-4x" style="color: var(--primary-color);"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <h2 class="fw-bold mb-2">{{ user.get_full_name|default:user.username }}</h2>
+                            <p class="mb-1"><i class="fas fa-envelope"></i> {{ user.email }}</p>
+                            <p class="mb-1"><i class="fas fa-user"></i> Username: {{ user.username }}</p>
+                            <p class="mb-0"><i class="fas fa-calendar"></i> Member since: {{ user.date_joined|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow border-0">
+                <div class="card-body p-4">
+                    <i class="fas fa-hand-holding-heart fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h3 class="fw-bold">{{ donor_records.count }}</h3>
+                    <p class="text-muted mb-0">Donor Registration(s)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow border-0">
+                <div class="card-body p-4">
+                    <i class="fas fa-file-medical fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h3 class="fw-bold">{{ user_requests.count }}</h3>
+                    <p class="text-muted mb-0">Hair Request(s)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow border-0">
+                <div class="card-body p-4">
+                    <i class="fas fa-check-circle fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h3 class="fw-bold">{{ donation_matches.count }}</h3>
+                    <p class="text-muted mb-0">Successful Match(es)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs for Different Sections -->
+    <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active text-dark fw-bold" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button">
+                <i class="fas fa-th-large"></i> Overview
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark fw-bold" id="donations-tab" data-bs-toggle="tab" data-bs-target="#donations" type="button">
+                <i class="fas fa-heart"></i> My Donations
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark fw-bold" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests" type="button">
+                <i class="fas fa-list"></i> My Requests
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link text-dark fw-bold" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="profileTabContent">
+        <!-- Overview Tab -->
+        <div class="tab-pane fade show active" id="overview" role="tabpanel">
+            <div class="row g-4">
+                <!-- Recent Activity -->
+                <div class="col-lg-12">
+                    <div class="card shadow border-0">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="fas fa-clock"></i> Recent Activity</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if donor_records or user_requests %}
+                                <div class="list-group list-group-flush">
+                                    {% for donor in donor_records|slice:":3" %}
+                                        <div class="list-group-item">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-hand-holding-heart fa-2x text-primary me-3"></i>
+                                                <div>
+                                                    <h6 class="mb-1">Registered as Donor</h6>
+                                                    <small class="text-muted">{{ donor.hair_length }}" {{ donor.hair_color }} hair - {{ donor.created_at|timesince }} ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    
+                                    {% for request in user_requests|slice:":3" %}
+                                        <div class="list-group-item">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-file-medical fa-2x text-success me-3"></i>
+                                                <div>
+                                                    <h6 class="mb-1">Submitted Hair Request</h6>
+                                                    <small class="text-muted">{{ request.patient_type }} - {{ request.created_at|timesince }} ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">No recent activity</p>
+                                    <a href="{% url 'donor_registration' %}" class="btn btn-primary me-2">Register as Donor</a>
+                                    <a href="{% url 'request_hair' %}" class="btn btn-outline-primary">Request Hair</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donations Tab -->
+        <div class="tab-pane fade" id="donations" role="tabpanel">
+            {% if donor_records %}
+                <div class="row g-4">
+                    {% for donor in donor_records %}
+                        <div class="col-lg-6">
+                            <div class="card h-100 shadow border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h5 class="card-title">{{ donor.full_name }}</h5>
+                                        {% if donor.status == 'Available' %}
+                                            <span class="badge bg-success">Available</span>
+                                        {% elif donor.status == 'Donated' %}
+                                            <span class="badge bg-info">Donated</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <i class="fas fa-ruler text-primary"></i>
+                                            <div><strong>{{ donor.hair_length }}"</strong></div>
+                                            <small class="text-muted">Length</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <i class="fas fa-palette text-primary"></i>
+                                            <div><strong>{{ donor.hair_color }}</strong></div>
+                                            <small class="text-muted">Color</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <i class="fas fa-wind text-primary"></i>
+                                            <div><strong>{{ donor.hair_type }}</strong></div>
+                                            <small class="text-muted">Type</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-muted mb-0">
+                                        <i class="fas fa-calendar"></i> Registered: {{ donor.created_at|date:"M d, Y" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="card shadow border-0">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-heart fa-3x text-muted mb-3"></i>
+                        <h5>No Donor Registrations</h5>
+                        <p class="text-muted">You haven't registered as a donor yet.</p>
+                        <a href="{% url 'donor_registration' %}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Register as Donor
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Requests Tab -->
+        <div class="tab-pane fade" id="requests" role="tabpanel">
+            {% if user_requests %}
+                <div class="row g-4">
+                    {% for request in user_requests %}
+                        <div class="col-lg-6">
+                            <div class="card h-100 shadow border-0">
+                                <div class="card-header" 
+                                     {% if request.request_status == 'Fulfilled' %}
+                                         style="background-color: #28a745; color: white;"
+                                     {% elif request.request_status == 'Matched' %}
+                                         style="background-color: #17a2b8; color: white;"
+                                     {% elif request.request_status == 'Approved' %}
+                                         style="background-color: #007bff; color: white;"
+                                     {% else %}
+                                         style="background-color: #ffc107; color: black;"
+                                     {% endif %}>
+                                    <div class="d-flex justify-content-between">
+                                        <span><strong>{{ request.patient_name }}</strong></span>
+                                        <span>{{ request.request_status }}</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Type:</strong> {{ request.patient_type }}</p>
+                                    <p><strong>Urgency:</strong> 
+                                        {% if request.urgency == 'Emergency' %}
+                                            <span class="badge bg-danger">{{ request.urgency }}</span>
+                                        {% elif request.urgency == 'High' %}
+                                            <span class="badge bg-warning text-dark">{{ request.urgency }}</span>
+                                        {% else %}
+                                            <span class="badge bg-info">{{ request.urgency }}</span>
+                                        {% endif %}
+                                    </p>
+                                    <p><strong>Required Length:</strong> {{ request.required_hair_length }}"</p>
+                                    <p class="text-muted mb-0">
+                                        <i class="fas fa-calendar"></i> Submitted: {{ request.created_at|date:"M d, Y" }}
+                                    </p>
+                                    <a href="{% url 'request_detail' request.pk %}" class="btn btn-sm btn-outline-primary mt-3">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="card shadow border-0">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-file-medical fa-3x text-muted mb-3"></i>
+                        <h5>No Hair Requests</h5>
+                        <p class="text-muted">You haven't submitted any hair requests yet.</p>
+                        <a href="{% url 'request_hair' %}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Request Hair
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-pane fade" id="settings" role="tabpanel">
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <h5 class="mb-4"><i class="fas fa-user-cog"></i> Account Information</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark">
+                            <i class="fas fa-lock"></i> Enter your password to confirm
+                        </label>
+                        <input type="password" name="password" class="form-control" 
+                               placeholder="Your current password" required>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4"><strong class="text-dark">Username:</strong></div>
+                        <div class="col-md-8 text-dark">{{ user.username }}</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4"><strong class="text-dark">Email:</strong></div>
+                        <div class="col-md-8 text-dark">{{ user.email }}</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4"><strong class="text-dark">First Name:</strong></div>
+                        <div class="col-md-8 text-dark">{{ user.first_name|default:"Not set" }}</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4"><strong class="text-dark">Last Name:</strong></div>
+                        <div class="col-md-8 text-dark">{{ user.last_name|default:"Not set" }}</div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4"><strong class="text-dark">Date Joined:</strong></div>
+                        <div class="col-md-8 text-dark">{{ user.date_joined|date:"F d, Y" }}</div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </a>
+                        <a href="{% url 'change_password' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-key"></i> Change Password
+                        </a>
+                        <a href="{% url 'delete_account' %}" class="btn btn-outline-danger">
+                            <i class="fas fa-trash"></i> Delete Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow border-0" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                <div class="card-body text-white text-center py-4">
+                    <h5 class="fw-bold mb-3">Quick Actions</h5>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="{% url 'donor_registration' %}" class="btn btn-light">
+                            <i class="fas fa-hand-holding-heart"></i> Register as Donor
+                        </a>
+                        <a href="{% url 'request_hair' %}" class="btn btn-outline-light">
+                            <i class="fas fa-file-medical"></i> Request Hair
+                        </a>
+                        <a href="{% url 'donor_list' %}" class="btn btn-outline-light">
+                            <i class="fas fa-users"></i> Browse Donors
+                        </a>
+                        <a href="{% url 'request_list' %}" class="btn btn-outline-light">
+                            <i class="fas fa-list"></i> View Requests
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

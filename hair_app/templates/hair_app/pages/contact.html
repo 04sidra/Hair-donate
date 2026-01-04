@@ -1,0 +1,186 @@
+{% extends 'hair_app/base.html' %}
+
+{% block title %}Contact Us - Hair Donation Portal{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Contact Form -->
+        <div class="col-lg-7 mb-4">
+            <div class="text-center mb-4">
+                <i class="fas fa-envelope fa-4x" style="color: var(--primary-color);"></i>
+                <h2 class="mt-3 fw-bold" style="color: var(--secondary-color);">Get In Touch</h2>
+                <p class="lead text-muted">We'd love to hear from you. Send us a message!</p>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <form method="POST" action="{% url 'contact' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i> Your Name *
+                            </label>
+                            {{ form.name }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-envelope"></i> Email Address *
+                            </label>
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-tag"></i> Subject *
+                            </label>
+                            {{ form.subject }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-comment"></i> Message *
+                            </label>
+                            {{ form.message }}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-lg-5">
+            <!-- Contact Cards -->
+            <div class="card shadow mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4" style="color: var(--secondary-color);">Contact Information</h5>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px; min-width: 50px;">
+                                <i class="fas fa-phone fa-lg"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="fw-bold mb-1">Phone</h6>
+                                <p class="text-muted mb-0">+91 1234567890</p>
+                                <p class="text-muted mb-0">Mon-Fri: 9AM - 6PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px; min-width: 50px;">
+                                <i class="fas fa-envelope fa-lg"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="fw-bold mb-1">Email</h6>
+                                <p class="text-muted mb-0">info@hairdonation.com</p>
+                                <p class="text-muted mb-0">support@hairdonation.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px; min-width: 50px;">
+                                <i class="fas fa-map-marker-alt fa-lg"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="fw-bold mb-1">Address</h6>
+                                <p class="text-muted mb-0">123 Compassion Street</p>
+                                <p class="text-muted mb-0">Malappuram, Kerala</p>
+                                <p class="text-muted mb-0">India - 676505</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="card shadow mb-4">
+                <div class="card-body p-4 text-center">
+                    <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">Follow Us</h5>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#" class="btn btn-outline-primary rounded-circle" style="width: 50px; height: 50px;">
+                            <i class="fab fa-facebook-f fa-lg"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary rounded-circle" style="width: 50px; height: 50px;">
+                            <i class="fab fa-twitter fa-lg"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary rounded-circle" style="width: 50px; height: 50px;">
+                            <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary rounded-circle" style="width: 50px; height: 50px;">
+                            <i class="fab fa-linkedin-in fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Quick Links -->
+            <div class="card shadow" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                <div class="card-body p-4 text-white text-center">
+                    <i class="fas fa-question-circle fa-3x mb-3"></i>
+                    <h5 class="fw-bold mb-3">Need Quick Answers?</h5>
+                    <p class="mb-3">Check out our frequently asked questions or reach out directly.</p>
+                    <a href="{% url 'about' %}" class="btn btn-light">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Response Time -->
+    <div class="alert alert-info text-center mt-4">
+        <i class="fas fa-clock"></i> 
+        <strong>Quick Response:</strong> We typically respond to all inquiries within 24-48 hours.
+    </div>
+
+    <!-- Common Questions -->
+    <div class="mt-5">
+        <h3 class="text-center fw-bold mb-4" style="color: var(--secondary-color);">Common Questions</h3>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-question fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h5 class="fw-bold">How do I donate?</h5>
+                        <p class="text-muted">Register as a donor, fill in your details, and we'll match you with someone in need.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-ruler fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h5 class="fw-bold">Minimum length?</h5>
+                        <p class="text-muted">Hair should be at least 8-10 inches long for donation. Longer is always better!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h5 class="fw-bold">Is it safe?</h5>
+                        <p class="text-muted">Absolutely! We verify all parties and maintain strict privacy standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

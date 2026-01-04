@@ -1,0 +1,182 @@
+{% extends 'hair_app/base.html' %}
+
+{% block title %}Request Details - Hair Donation Portal{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Request Details -->
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                    <h4 class="mb-0"><i class="fas fa-file-medical"></i> Request Details</h4>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Urgency & Status -->
+                    <div class="mb-4">
+                        {% if request.urgency == 'Emergency' %}
+                            <span class="badge bg-danger fs-5">
+                                <i class="fas fa-exclamation-triangle"></i> EMERGENCY
+                            </span>
+                        {% elif request.urgency == 'High' %}
+                            <span class="badge bg-warning text-dark fs-5">
+                                <i class="fas fa-exclamation-circle"></i> HIGH PRIORITY
+                            </span>
+                        {% else %}
+                            <span class="badge bg-info fs-5">{{ request.urgency }}</span>
+                        {% endif %}
+                        
+                        <span class="badge bg-primary fs-5 ms-2">{{ request.patient_type }}</span>
+                        <span class="badge bg-secondary fs-5 ms-2">{{ request.request_status }}</span>
+                    </div>
+
+                    <!-- Patient Information -->
+                    <h5 class="fw-bold text-primary mb-3">
+                        <i class="fas fa-user-injured"></i> Patient Information
+                    </h5>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ request.patient_name }}</p>
+                            <p><strong>Age:</strong> {{ request.age }} years</p>
+                            <p><strong>Email:</strong> {{ request.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Phone:</strong> {{ request.phone }}</p>
+                            <p><strong>Location:</strong> {{ request.city }}, {{ request.state }}</p>
+                            <p><strong>Pincode:</strong> {{ request.pincode }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Medical Condition -->
+                    <h5 class="fw-bold text-primary mb-3">
+                        <i class="fas fa-heartbeat"></i> Medical Condition
+                    </h5>
+                    <div class="alert alert-light mb-4">
+                        <p class="mb-0">{{ request.medical_condition }}</p>
+                    </div>
+
+                    <!-- Hair Requirements -->
+                    <h5 class="fw-bold text-primary mb-3">
+                        <i class="fas fa-cut"></i> Hair Requirements
+                    </h5>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-ruler fa-2x text-primary mb-2"></i>
+                                <p class="mb-0"><strong>{{ request.required_hair_length }}"</strong></p>
+                                <small>Minimum Length</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-palette fa-2x text-primary mb-2"></i>
+                                <p class="mb-0"><strong>{{ request.preferred_hair_color|default:"Any" }}</strong></p>
+                                <small>Preferred Color</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-wind fa-2x text-primary mb-2"></i>
+                                <p class="mb-0"><strong>{{ request.preferred_hair_type|default:"Any" }}</strong></p>
+                                <small>Preferred Type</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hospital Information -->
+                    {% if request.hospital_name %}
+                        <h5 class="fw-bold text-primary mb-3">
+                            <i class="fas fa-hospital"></i> Hospital Information
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Hospital:</strong> {{ request.hospital_name }}</p>
+                                <p><strong>Doctor:</strong> {{ request.doctor_name }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Contact:</strong> {{ request.doctor_contact }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Posted Date -->
+                    <div class="text-muted">
+                        <i class="fas fa-clock"></i> <small>Posted {{ request.created_at|timesince }} ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matching Donors Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-users"></i> Matching Donors</h5>
+                </div>
+                <div class="card-body">
+                    {% if matching_donors %}
+                        <p class="text-muted mb-3">
+                            Found {{ matching_donors.count }} matching donor(s)
+                        </p>
+                        {% for donor in matching_donors %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                                         style="width: 40px; height: 40px;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="ms-2">
+                                        <strong>{{ donor.full_name }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ donor.city }}</small>
+                                    </div>
+                                </div>
+                                <div class="small">
+                                    <i class="fas fa-ruler text-primary"></i> {{ donor.hair_length }}" |
+                                    <i class="fas fa-palette text-primary"></i> {{ donor.hair_color }}
+                                </div>
+                                <a href="mailto:{{ donor.email }}" class="btn btn-sm btn-outline-primary w-100 mt-2">
+                                    Contact
+                                </a>
+                            </div>
+                        {% endfor %}
+                        <a href="{% url 'donor_list' %}" class="btn btn-success w-100">
+                            <i class="fas fa-search"></i> View All Donors
+                        </a>
+                    {% else %}
+                        <div class="text-center py-3">
+                            <i class="fas fa-info-circle fa-3x text-muted mb-3"></i>
+                            <p>No matching donors found yet.</p>
+                            <a href="{% url 'donor_registration' %}" class="btn btn-primary btn-sm">
+                                Become a Donor
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="card shadow-lg">
+                <div class="card-body text-center">
+                    <i class="fas fa-hand-holding-heart fa-3x text-primary mb-3"></i>
+                    <h5>Can You Help?</h5>
+                    <p class="text-muted">If you match the requirements, please consider donating.</p>
+                    <a href="{% url 'donor_registration' %}" class="btn btn-primary w-100 mb-2">
+                        <i class="fas fa-heart"></i> Donate Hair
+                    </a>
+                    <a href="mailto:{{ request.email }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-envelope"></i> Contact Patient
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'request_list' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Requests
+        </a>
+    </div>
+</div>
+{% endblock %}

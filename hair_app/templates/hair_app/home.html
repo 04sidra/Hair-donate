@@ -1,0 +1,225 @@
+{% extends 'hair_app/base.html' %}
+
+{% block title %}Home - Hair Donation Portal{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section" style="background: url('https://i.imgur.com/your-anime-image.jpg') center/cover no-repeat, linear-gradient(135deg, rgba(233, 30, 99, 0.85), rgba(156, 39, 176, 0.85)); background-blend-mode: overlay;">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+            <i class="fas fa-hand-holding-heart"></i> Gift
+        </h1>
+        <p class="lead mb-4" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+            Connecting compassionate donors with cancer patients, burn victims, and those who need hair after medical treatment.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{% url 'donor_registration' %}" class="btn btn-light btn-lg">
+                <i class="fas fa-hands-helping"></i> Donate Hair
+            </a>
+            <a href="{% url 'request_hair' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-question-circle"></i> Request Hair
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <i class="fas fa-user-friends"></i>
+                <h3>{{ total_donors }}</h3>
+                <p class="text-muted mb-0">Available Donors</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <i class="fas fa-hand-paper"></i>
+                <h3>{{ total_requests }}</h3>
+                <p class="text-muted mb-0">Pending Requests</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <i class="fas fa-heart"></i>
+                <h3>{{ total_matches }}</h3>
+                <p class="text-muted mb-0">Successful Donations</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Why Donate Section -->
+<div class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="color: var(--secondary-color);">
+            <i class="fas fa-question-circle"></i> Why Hair Donation Matters
+        </h2>
+        <p class="lead text-muted">Your hair can bring back confidence and hope</p>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-ribbon fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h5 class="card-title">Cancer Patients</h5>
+                    <p class="card-text">
+                        Chemotherapy causes hair loss, affecting confidence. Your donation can help them feel like themselves again.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-fire fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h5 class="card-title">Burn Victims</h5>
+                    <p class="card-text">
+                        Severe burns can result in permanent hair loss. Your hair can help restore their appearance and self-esteem.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-hospital fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h5 class="card-title">Medical Conditions</h5>
+                    <p class="card-text">
+                        Alopecia and other conditions cause hair loss. Your donation gives them hope and confidence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works Section -->
+<div class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="color: var(--secondary-color);">
+            <i class="fas fa-cogs"></i> How It Works
+        </h2>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-primary h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-hand-holding-heart"></i> For Donors</h5>
+                </div>
+                <div class="card-body">
+                    <ol class="ps-3">
+                        <li class="mb-2"><strong>Register:</strong> Fill out the donor registration form</li>
+                        <li class="mb-2"><strong>Requirements:</strong> Hair should be at least 8-10 inches long</li>
+                        <li class="mb-2"><strong>Get Matched:</strong> We'll match you with someone in need</li>
+                        <li class="mb-2"><strong>Donate:</strong> Visit a salon or donate from home</li>
+                        <li class="mb-2"><strong>Make a Difference:</strong> Change someone's life!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-success h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-hands-helping"></i> For Recipients</h5>
+                </div>
+                <div class="card-body">
+                    <ol class="ps-3">
+                        <li class="mb-2"><strong>Submit Request:</strong> Fill the hair request form</li>
+                        <li class="mb-2"><strong>Upload Documents:</strong> Medical certificate required</li>
+                        <li class="mb-2"><strong>Get Verified:</strong> Our team will review your request</li>
+                        <li class="mb-2"><strong>Get Matched:</strong> We'll find a suitable donor</li>
+                        <li class="mb-2"><strong>Receive Hair:</strong> Get your hair donation with love</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="container mb-5">
+    <div class="card text-center" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+        <div class="card-body py-5 text-white">
+            <h2 class="fw-bold mb-4">Ready to Make a Difference?</h2>
+            <p class="lead mb-4">
+                Your hair grows back. Their confidence may not. Be the reason someone smiles today!
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'donor_registration' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-heart"></i> I Want to Donate
+                </a>
+                <a href="{% url 'request_hair' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-hand-paper"></i> I Need Hair
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="color: var(--secondary-color);">
+            <i class="fas fa-quote-left"></i> What People Say
+        </h2>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                    </div>
+                    <p class="card-text fst-italic">
+                        "Donating my hair was one of the most rewarding experiences. Knowing it will help a cancer patient feel beautiful again is priceless."
+                    </p>
+                    <p class="text-end mb-0"><strong>- Sarah M., Donor</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                    </div>
+                    <p class="card-text fst-italic">
+                        "After losing my hair to chemotherapy, receiving a hair donation restored my confidence. Thank you to all the kind donors!"
+                    </p>
+                    <p class="text-end mb-0"><strong>- Priya K., Recipient</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                        <i class="fas fa-star" style="color: gold;"></i>
+                    </div>
+                    <p class="card-text fst-italic">
+                        "This platform made it so easy to connect with someone in need. I'll definitely donate again when my hair grows back!"
+                    </p>
+                    <p class="text-end mb-0"><strong>- Rahul S., Donor</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
