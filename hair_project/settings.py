@@ -85,7 +85,7 @@ TEMPLATES = [
 # ==========================
 # WSGI
 # ==========================
-WSGI_APPLICATION = 'hair_app.wsgi.application'
+WSGI_APPLICATION = 'hair_project.wsgi.application'
 
 # ==========================
 # DATABASE
